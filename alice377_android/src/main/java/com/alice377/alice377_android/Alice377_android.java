@@ -664,8 +664,8 @@ public class Alice377_android {
     }
     //*------------------------------------------------------------------------------------------*//
 
-    void testNewUserPush() {
-        Log.d(TAG, "測試上傳github");
-    }
+//    void testNewUserPush() {
+//        Log.d(TAG, "測試上傳github");
+//    }
 
 }
