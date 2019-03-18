@@ -56,7 +56,7 @@ public class Alice377_list extends AppCompatActivity {
     private final Context context = Alice377_list.this;
     private RelativeLayout m_alice377_list_R_logo, m_alice377_list_R_rel, m_alice377_list_R_query;
     private TextView m_alice377_list_T_gettoday, m_alice377_list_T_msg, m_alice377_list_T_loginmsg,
-            m_alice377_list_T_msg2;
+            m_alice377_list_T_msg2,m_alice377_list_T_copyright;
     private Spinner m_table_S_db, m_table_S_table;
     private EditText m_sql_E_write, m_table_E_sql_where, m_table_E_sql_order, m_alice377_list_E_sql_where,
             m_alice377_list_E_sql_order;
@@ -88,7 +88,7 @@ public class Alice377_list extends AppCompatActivity {
     private String[] db_name = {"打包區", "電鍍委外", "維修通報", "維修助手"}; //資料庫中文清單
     private String[] db_id = {"packing_scan.db", "Elec_com.db", "main_bull.db", "main_at.db"}; //資料庫id清單
     private String[] table_id = {"packing_scan", "electroplating_commission", "maintenance_bulletin",
-            "maintenance_assistant"}; //資料表id清單
+                                 "maintenance_assistant"}; //資料表id清單
     private int table_num = 0; //預設打包區
     private String[] packing_scan = {"台北廠", "雲科廠"}; //打包區資料表中文清單
     private String[] packing_scan_id = {"packing_scan_NJ", "packing_scan_RP", "packing_scan_SZ"}; //打包區db資料表清單
@@ -96,17 +96,18 @@ public class Alice377_list extends AppCompatActivity {
     private String[] electroplating_commission_id = {"Elec_com_NJ", "Elec_com_RP"}; //電鍍委外db資料表清單
     private String[] maintenance_bulletin = {"報修主表", "報修子表", "teamplus訊息表"}; //維修通報資料表中文清單
     private String[] maintenance_bulletin_id = {"main_bull_sentdata_m", "main_bull_sentdata_d",
-            "main_bull_sentteamplus"}; //維修通報db資料表清單
+                                                "main_bull_sentteamplus"}; //維修通報db資料表清單
     private String[] maintenance_assistant = {"報修主表", "報修子表", "報修teamplus訊息表", "維修主表",
-            "維修子表", "維修teamplus訊息表"}; //維修助手資料表中文清單
+                                              "維修子表", "維修teamplus訊息表"}; //維修助手資料表中文清單
     private String[] maintenance_assistant_id = {"main_at_sentdata_m", "main_at_sentdata_d",
-            "main_at_sentteamplus", "main_at_main_data_m",
-            "main_at_main_data_d", "main_at_main_data_teamplus"}; //維修助手db資料表清單
+                                                 "main_at_sentteamplus", "main_at_main_data_m",
+                                                 "main_at_main_data_d", "main_at_main_data_teamplus"}; //維修助手db資料表清單
     private int subtable_num = 0; //預設台北
     private String sql_where = ""; //儲存使用者輸入的sqlite_where語法
     private String sql_order = ""; //儲存使用者輸入的sql_order語法
     private int table_page = 0; //記錄工程模式-資料表查詢頁面：1=使用中
     private int first_create = 0; //記錄SQLite_table查詢初次使用情形：0=初次使用
+
     //login提示訊息監聽
     private TextView.OnClickListener showlogin = new TextView.OnClickListener() {
 
@@ -116,6 +117,7 @@ public class Alice377_list extends AppCompatActivity {
             alice377log("Alice377_list login_layout start.", 1); //寫log
         }
     };
+
     //資料表選項監聽
     private Spinner.OnItemSelectedListener tablechoice = new Spinner.OnItemSelectedListener() {
 
@@ -128,6 +130,7 @@ public class Alice377_list extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> parent) {
         }
     };
+
     //資料庫db選項監聽
     private Spinner.OnItemSelectedListener dbchoice = new Spinner.OnItemSelectedListener() {
 
@@ -208,6 +211,7 @@ public class Alice377_list extends AppCompatActivity {
     //自定義method
     private void setupViewComponent() {
         m_alice377_list_R_logo = (RelativeLayout) findViewById(R.id.alice377_list_R_logo); //alice377_Logo畫面
+        m_alice377_list_T_copyright = (TextView) findViewById(R.id.alice377_list_T_copyright); //alice377_Logo copyright
         m_alice377_list_R_rel = (RelativeLayout) findViewById(R.id.alice377_list_R_rel); //工程模式畫面
         m_alice377_list_R_query = (RelativeLayout) findViewById(R.id.alice377_list_R_query); //工程模式-資料表查詢畫面
         m_alice377_list_T_loginmsg = (TextView) findViewById(R.id.alice377_list_T_loginmsg); //alice377_Logo畫面的提示訊息
@@ -222,6 +226,15 @@ public class Alice377_list extends AppCompatActivity {
         today = mobiletoday("yyyy/M/d"); //取得手機今天日期
         m_alice377_list_T_gettoday.setText(today);
         m_alice377_list_T_gettoday.setTextColor(getResources().getColor(R.color.blue));
+
+        //Copyright加入年份區間----------------------------------------------------------------------
+        int startyearnun = getString(R.string.alice377_list_t_copyright).indexOf("8");
+        String copyrightyear = getString(R.string.alice377_list_t_copyright).substring(0, startyearnun + 1);
+        copyrightyear += "-" + mobiletoday("yyyy") + getString(R.string.alice377_list_t_copyright)
+                .substring(startyearnun + 1);
+        m_alice377_list_T_copyright.setText(copyrightyear);
+        m_alice377_list_T_copyright.setTextColor(getResources().getColor(R.color.alice377_copyright));
+        //------------------------------------------------------------------------------------------
 
         layoutstart(); //layout初始化設定
         alice377dialog(); //初始化工程模式登入視窗
@@ -287,31 +300,6 @@ public class Alice377_list extends AppCompatActivity {
         AppLogDb.insert_date = mobiletoday("yyyy/M/d");
         insert(context); //寫入資料
     }
-
-//    //儲存使用者操作資料進SQLite
-//    public static void db_log_insert(ContentResolver ConRes, Uri uri, Context context) {
-//        ContentValues newRow = new ContentValues();
-//        newRow.put("app_name", appname);
-//        newRow.put("action_view", action_view);
-//        newRow.put("action_action", action_action);
-//        newRow.put("action_date", action_date);
-//        newRow.put("status", status);
-//        newRow.put("insert_date", insert_date);
-//        Uri uri1 = ConRes.insert(uri, newRow);
-//
-//        if (uri1 == null) {
-//            Toast.makeText(context, "log write eroor.", Toast.LENGTH_SHORT).show();
-//            ContentValues errorRow = new ContentValues();
-//            errorRow.put("app_name", appname);
-//            errorRow.put("action_view", action_view);
-//            errorRow.put("action_action", "log write eroor.");
-//            errorRow.put("action_date", action_date);
-//            errorRow.put("status", 0);
-//            errorRow.put("insert_date", insert_date);
-//            ConRes.insert(uri, errorRow);
-//        }
-//
-//    }
 
     //SQLite掃描資料只保留最近七天的資料：避免log資料過於龐大
     private void cleardata() {
@@ -612,6 +600,7 @@ public class Alice377_list extends AppCompatActivity {
     }
 
     //工程模式title右邊的image
+    @SuppressLint("InflateParams")
     public void I_setting(View view) {
         alice377view = LayoutInflater.from(Alice377_list.this)
                 .inflate(R.layout.alice377_list_menu, null); //自定義Layout:dialog
@@ -630,6 +619,7 @@ public class Alice377_list extends AppCompatActivity {
     }
 
     //工程模式選單：SQL查詢
+    @SuppressLint("InflateParams")
     public void sqlbtn(View view) {
         alice377view = LayoutInflater.from(Alice377_list.this)
                 .inflate(R.layout.alice377_list_menu_sql, null); //自定義Layout:dialog
@@ -694,6 +684,7 @@ public class Alice377_list extends AppCompatActivity {
     }
 
     //SQL查詢視窗：欄位說明
+    @SuppressLint("InflateParams")
     public void supportbtn(View view) {
         alice377view = LayoutInflater.from(Alice377_list.this)
                 .inflate(R.layout.alice377_list_sql_support, null); //自定義Layout:dialog
@@ -724,6 +715,7 @@ public class Alice377_list extends AppCompatActivity {
     }
 
     //工程模式選單：選擇資料表查詢
+    @SuppressLint("InflateParams")
     public void tablebtn(View view) {
         alice377view = LayoutInflater.from(Alice377_list.this)
                 .inflate(R.layout.alice377_list_menu_table, null); //自定義Layout:dialog
