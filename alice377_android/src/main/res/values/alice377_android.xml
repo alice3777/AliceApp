@@ -11,7 +11,7 @@
     <string name="repon_list_login_t_password">密碼：</string>
     <string name="repon_list_login_e_password" />
     <string name="repon_list_login_b_login">登入</string>
-    <string name="repon_list_t_copyright">Copyright © 2018 by 南俊資訊部</string>
+    <string name="repon_list_t_copyright">Copyright © 2018 by Alice377</string>
     <string name="repon_list_t_loginmsg">您需要輸入帳號密碼才能開啟『工程模式』</string>
     <string name="repon_list_quit_t_title">工程模式確認視窗</string>
     <string name="repon_list_quit_t_msg">確定要離開工程模式嗎?</string>
