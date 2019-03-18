@@ -35,7 +35,7 @@ import java.util.TimeZone;
 
 public class Alice377_android {
 
-    private static final String TAG = "repongroup=>";
+    private static final String TAG = "alice377=>";
     public static boolean uselog = false; //是否啟用log
     //*app應用類----------------------------------------------------------------------------------*//
     public static int langnum = 0; //標記使用的語言：0=預設繁體,1=簡體,2=英文
@@ -247,7 +247,7 @@ public class Alice377_android {
             }
 
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-            reponlog(view, "[自動]未連接網路", 0, mContext); //寫lag
+            alice377log(view, "[自動]未連接網路", 0, mContext); //寫lag
         }
 
     }
@@ -275,7 +275,7 @@ public class Alice377_android {
     }
 
     //app寫log
-    public static void reponlog(String view, String action, int status, Context context) {
+    public static void alice377log(String view, String action, int status, Context context) {
         AppLogDb.action_view = view;
         AppLogDb.action_action = action;
         AppLogDb.action_date = mobiletoday("yyyy/MM/dd HH:mm:ss");

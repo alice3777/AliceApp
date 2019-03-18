@@ -90,7 +90,7 @@ public class Alice377_list extends AppCompatActivity {
     private String[] table_id = {"packing_scan", "electroplating_commission", "maintenance_bulletin",
             "maintenance_assistant"}; //資料表id清單
     private int table_num = 0; //預設打包區
-    private String[] packing_scan = {"台北廠", "雲科廠", "南俊商貿"}; //打包區資料表中文清單
+    private String[] packing_scan = {"台北廠", "雲科廠"}; //打包區資料表中文清單
     private String[] packing_scan_id = {"packing_scan_NJ", "packing_scan_RP", "packing_scan_SZ"}; //打包區db資料表清單
     private String[] electroplating_commission = {"台北廠", "雲科廠"}; //電鍍委外資料表中文清單
     private String[] electroplating_commission_id = {"Elec_com_NJ", "Elec_com_RP"}; //電鍍委外db資料表清單
